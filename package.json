@@ -1,0 +1,79 @@
+{
+    "name": "ast-flow-graph",
+    "version": "1.0.18",
+    "description": "Constructs a CFG for JavaScript source code.",
+    "main": "index.js",
+    "bin": "_cli.js",
+    "scripts": {
+        "debug": "nodemon --inspect _cli.js -gs ./test_packages/command_injection/os_command.js",
+        "lint": "eslint index.js cli.js _cli.js src/**/*.js",
+        "deps": "npx npm-check",
+        "check": "npm run lint -s && npm run deps",
+        "test": "rm -rf node_modules/.cache coverage/ && nyc --reporter=lcov --reporter=text --produce-source-map --require=esm mocha",
+        "coveralls": "npm test && nyc report --reporter=text-lcov | tee coverage.lcov | npx coveralls",
+        "postcoveralls": "codecov && rimraf ./coverage coverage.lcov",
+        "prepublishOnly": "npm test",
+        "patch": "npm version patch && npm publish",
+        "minor": "npm version minor && npm publish",
+        "major": "npm version major && npm publish",
+        "postpublish": "git push origin master --follow-tags",
+        "changelog": "npx auto-changelog -p -l 10 && git add CHANGELOG.md",
+        "save": "git commit -a --amend -C HEAD",
+        "marktoc": "npx replace -s -q '### Changelog' '<!-- START doctoc -->\\\n<!-- END doctoc -->' CHANGELOG.md",
+        "toc": "npx doctoc --github --title \"### Changelog\" CHANGELOG.md",
+        "api": "node -e \"const x='README',{readFileSync:_r,writeFileSync:w}=require('fs'),r=f=>_r(f+'.md','utf8'),s=r(x),t='<!-- APIS -->\\n'+r('tmp')+'<!--APIE>';w(x+'.md',s.replace(/<!--APIS>[\\s\\S]*<!-- APIE -->/,t))\"",
+        "gendocs": "npx jsdoc-to-markdown src/*.js > tmp.md",
+        "rmdocs": "rimraf tmp.md",
+        "docs": "run-s -s gendocs api rmdocs",
+        "docsite": "npx documentation build index.js --infer-private='^_.*'  -f html -o docs",
+        "version": "run-s -s changelog marktoc toc docs",
+        "gkupdate": "greenkeeper-lockfile-update",
+        "gkupload": "greenkeeper-lockfile-upload"
+    },
+    "repository": {
+        "types": "git",
+        "url": "https://github.com/julianjensen/ast-flow-graph.git"
+    },
+    "keywords": [
+        "cfg",
+        "flowgraph",
+        "flow graph",
+        "control flow graph"
+    ],
+    "author": "Julian Jensen <jjdanois@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/julianjensen/ast-flow-graph/issues"
+    },
+    "homepage": "https://github.com/julianjensen/ast-flow-graph#readme",
+    "devDependencies": {
+        "@types/esprima": "^4.0.2",
+        "@types/estree": "^0.0.39",
+        "chai": "^4.2.0",
+        "codecov": "^3.5.0",
+        "eslint": "^6.0.1",
+        "greenkeeper-lockfile": "^1.15.1",
+        "mocha": "^6.1.4",
+        "npm-run-all": "^4.1.5",
+        "nyc": "^14.1.1"
+    },
+    "dependencies": {
+        "@babel/generator": "^7.18.2",
+        "ast-flow-graph": "^1.0.18",
+        "chalk": "^2.4.2",
+        "cli-table3": "^0.5.1",
+        "command-line-args": "^5.1.1",
+        "command-line-usage": "^6.0.2",
+        "digraphe": "^1.0.6",
+        "dominators": "^1.1.2",
+        "escope": "^3.6.0",
+        "esm": "^3.2.25",
+        "espree": "^6.0.0",
+        "estraverse": "^4.2.0",
+        "traversals": "^1.0.15",
+        "yallist": "^3.0.3"
+    },
+    "esm": {
+        "mode": "auto"
+    }
+}
