@@ -8,7 +8,6 @@ export default class DFG {
 
     constructor(source) {
         //source += "\nvar mid = base;";
-        console.log(source)
         this.graph = new Graph();
         const tree = parse(source);
 
@@ -45,7 +44,11 @@ export default class DFG {
             }
         })
 
-        console.log(edges)
+
+        src = src.replace("$nodes$", JSON.stringify(nodes));
+        src = src.replace("$edges$", JSON.stringify(edges));
+        fs.writeFileSync(path.join(__dirname, '..', 'output', 'dfg.html'), src);
+
     }
 
 
@@ -59,12 +62,12 @@ export default class DFG {
 
     }
     handle_childNode(childNode) {
-        let dstNode = null;
+        let source = null;
         if ('VariableDeclarator' == childNode.type) {
-            dstNode = childNode.id.name;
+            source = childNode.id.name;
         }
         if ('AssignmentExpression' == childNode.type) {
-            dstNode = childNode.left.name;
+            source = childNode.left.name;
         }
         let sources = new Set();
         walk(childNode, (node, parent) => {
@@ -73,10 +76,10 @@ export default class DFG {
             this.handle_ObjectExpression(node, sources)
             this.handle_MemberExpression(node, sources)
         });
-        console.log(dstNode, sources);
-        sources.forEach(source => {
-            if (dstNode)
-                this.graph.addEdge(source, dstNode);
+        sources.forEach(target => {
+            if (source)
+                if (source != target)
+                    this.graph.addEdge(source, target);
         })
     }
 

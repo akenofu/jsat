@@ -22,10 +22,10 @@
 
     <script type="text/javascript">
         // create an array with nodes
-        var nodes = new vis.DataSet($nodes$);
+        var nodes = new vis.DataSet([{"id":0,"label":"inner"},{"id":1,"label":"nothing"},{"id":2,"label":"base"},{"id":3,"label":"link"},{"id":4,"label":"console"},{"id":5,"label":"log"}]);
 
         // create an array with edges
-        var edges = new vis.DataSet($edges$);
+        var edges = new vis.DataSet([{"from":1,"to":2,"arrows":{"middle":{"scaleFactor":0.5},"from":true}},{"from":3,"to":0,"arrows":{"middle":{"scaleFactor":0.5},"from":true}}]);
 
         // create a network
         var container = document.getElementById("mynetwork");

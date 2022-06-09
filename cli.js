@@ -13,6 +13,7 @@ import cli from 'command-line-args';
 import usage from 'command-line-usage';
 import { load_plugins } from "./src/utils";
 import DFG from "./src/dfg";
+import { exec } from 'child_process';
 
 const
     version = require(path.join(__dirname, 'package.json')).version,
@@ -159,19 +160,18 @@ async function single_function(cfg, name, generate) {
     if (args.table) console.log(c.toTable());
     if (args.lines) console.log('' + cfg);
 
-    if (args.graph) {
-        const dot = cfg.create_dot(c);
+    const dot = cfg.create_dot(c);
+    fs.writeFileSync(path.join(__dirname, 'output', `${name}.dot`), dot);
+    exec(`dot -Tsvg -O ./output/${name}.dot`, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`error: ${error.message}`);
+            return;
+        }
 
-        if (args.output) {
-            try {
-                const s = await stat(args.output);
-                if (!s.isDirectory()) throw new Error();
-                await writeFile(`./dots/${c.name}.dot`, dot);
-            } catch (err) {
-                console.error(`Unable to stat "${args.output}"`);
-                process.exit(1);
-            }
-        } else
-            console.log(`${dot}\n\n`);
-    }
+        if (stderr) {
+            console.error(`stderr: ${stderr}`);
+            return;
+        }
+
+    });
 }

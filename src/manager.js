@@ -146,7 +146,7 @@ export default class BlockManager {
 
         this.blocks.forEach(b => {
             for (const edge of this.edges.edges(b)) {
-                if (edge.type.isa(Edge.TRUE | Edge.FALSE | Edge.EXCEPTION))
+                if (edge.type.isa(Edge.TRUE | Edge.FALSE | Edge.EXCEPTION | Edge.JUMP))
                     cond.push(edge);
                 else
                     uncond.push(edge);

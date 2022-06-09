@@ -1,0 +1,20 @@
+// main:1-9
+digraph "main:1-9" {
+    default = "#0D3B66";
+    bgcolor = "white";
+    color = "#0D3B66";
+    fontcolor = "#0D3B66";
+    fontname = "arial";
+    shape = "ellipse";
+    nodesep = "1.5";
+    margin = "0.5, 0.2";
+    labelloc="t";
+    label="main:1-9";
+    fontsize=30
+    node [color = "#0D3B66", fontcolor = "#0D3B66", fontname = "arial", style = "rounded"];
+    0 [label = "entry:0", color = "#C6AC4D", fontcolor = "#0D3B66", fontname = "arial", style = "rounded", shape = "box"];
+    1 [label = "exit:1", color = "#C6AC4D", fontcolor = "#0D3B66", fontname = "arial", style = "rounded", shape = "box"];
+    
+    // Conditional edges
+    edge [color = "#F95738", fontcolor = "#F95738", fontname = "arial italic", style = "dashed"];
+}

@@ -71,7 +71,9 @@
         "esm": "^3.2.25",
         "espree": "^6.0.0",
         "estraverse": "^4.2.0",
+        "graphviz": "^0.0.9",
         "traversals": "^1.0.15",
+        "vis-network": "^9.1.2",
         "yallist": "^3.0.3"
     },
     "esm": {
