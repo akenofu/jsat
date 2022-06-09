@@ -12,7 +12,7 @@ import fs from 'fs';
 import cli from 'command-line-args';
 import usage from 'command-line-usage';
 import { load_plugins } from "./src/utils";
-import { mark_vulnerable_sinks_in_cfgMasterBlock } from "./src/sinks";
+import DFG from "./src/dfg";
 
 const
     version = require(path.join(__dirname, 'package.json')).version,
@@ -131,6 +131,8 @@ function process_all() {
 function process_file(source) {
     const
         cfg = new CFG(source, { ssaSource: args.rewrite });
+    const
+        dfg = new DFG(source);
 
     if (args.name && args.name.length)
         args.name.forEach(async name => await single_function(cfg, name, true));
@@ -138,7 +140,7 @@ function process_file(source) {
         cfg.generate();
         cfg.forEach(async c => await single_function(cfg, c.name, false));
     }
-    mark_vulnerable_sinks_in_cfgMasterBlock(cfg);
+
 }
 
 /**

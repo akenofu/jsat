@@ -59,6 +59,7 @@
     },
     "dependencies": {
         "@babel/generator": "^7.18.2",
+        "abstract-syntax-tree": "^2.20.6",
         "ast-flow-graph": "^1.0.18",
         "chalk": "^2.4.2",
         "cli-table3": "^0.5.1",
