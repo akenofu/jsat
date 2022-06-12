@@ -11,12 +11,11 @@ function expolit(string, input, val) {
         var nothing = key + base[key];
     }
 
-    if (inner == "bad") {
-        var nothing = base['basekey'] + "abc";
-    }
-    if (inner != 'bad') {
-        var link = inner + "123";
-    }
+    // if (inner == "bad") {
+    //     var nothing = base['basekey'] + "abc";
+    // } else {
+    //     var link = inner + "123";
+    // }
     cp.exec(link);
     cp.exec(end);
 

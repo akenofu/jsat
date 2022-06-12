@@ -130,6 +130,7 @@ function process_all() {
  * @param {string} source
  */
 function process_file(source) {
+    exec('rm ./output/*');
     const
         cfg = new CFG(source, { ssaSource: args.rewrite });
     const
