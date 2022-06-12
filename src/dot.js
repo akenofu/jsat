@@ -23,6 +23,10 @@ const
             color: '#0D3B66',
             fontcolor: '#0D3B66'
         },
+        vulnerable_sink: {
+            color: "#FF0000",
+            fontcolor: "#FF0000"
+        },
         test: {
             style: 'rounded',
             color: '#F95738',
@@ -39,6 +43,7 @@ const
             shape: 'box',
             color: '#C6AC4D'
         },
+
         unconditional: {
             color: '#0D3B65'
         },
@@ -107,6 +112,7 @@ export default function dot(opts) {
 
         defaults = toStr(defaultDotOptions.defaults, ';'),
         node = toStr(diffs(merge('node'))),
+        vulnerable_sink = toStr(diffs(merge('vulnerable_sink'))),
         test = toStr(diffs(merge('test'))),
         entry = toStr(diffs(merge('entry'))),
         exit = toStr(diffs(merge('exit'))),
@@ -121,20 +127,19 @@ export default function dot(opts) {
     innerLines.push(`${end} [label = "exit:${end}"${exit ? ', ' + exit : ''}];`);
     innerLines.push(...opts.blocks
         .filter(b => !!b)
-        .map(b => b.id !== start && b.id !== end && !!nodeLabels[b.id] && `${b.id} [label = "${nodeLabels[ b.id ]}"${condEdges.includes( b.id ) && test ? ', ' + test : ''}];` || null)
+        .map(b => b.id !== start && b.id !== end && !!nodeLabels[b.id] && `${b.id} [label = "${nodeLabels[ b.id ]}"${b.vulnerable_sinks.length > 0 ? vulnerable_sink: ''}${condEdges.includes( b.id ) && test ? ', ' + test : ''}];` || null)
         .filter(s => !!s));
 
-    if (condEdges.length) {
-        innerLines.push("", "// Unconditional edges");
-        if (unconditional) innerLines.push(`edge [${unconditional}];`);
-        innerLines.push(...uncondEdges.map(formatEdge));
-    }
+    innerLines.push("", "// Unconditional edges");
+    if (unconditional) innerLines.push(`edge [${unconditional}];`);
+    innerLines.push(...uncondEdges.map(formatEdge));
 
-    if (uncondEdges.length) {
-        innerLines.push("", "// Conditional edges");
-        if (conditional) innerLines.push(`edge [${conditional}];`);
-        innerLines.push(...condEdges.map(formatEdge));
-    }
+
+
+    innerLines.push("", "// Conditional edges");
+    if (conditional) innerLines.push(`edge [${conditional}];`);
+    innerLines.push(...condEdges.map(formatEdge));
+
 
     let graphLines = [`digraph "${title}" {`, ...innerLines.map(l => '    ' + l), "}"];
 

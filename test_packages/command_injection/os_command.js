@@ -6,17 +6,17 @@ function expolit(string, input, val) {
     inner = ""
     var base = { "basekey": inner };
     var mid = "123";
-    var end = mid + "";
+    // var end = mid + "";
     for (var key in base) {
         var nothing = key + base[key];
     }
 
-    // if (inner == "bad") {
-    //     var nothing = base['basekey'] + "abc";
-    // } else {
-    //     var link = inner + "123";
-    // }
-    cp.exec(link);
+    if (inner == "bad") {
+        var nothing = base['basekey'] + "abc";
+    } else {
+        var link = inner + "123";
+    }
+    cp.exec(link, input);
     cp.exec(end);
 
     mid = base;

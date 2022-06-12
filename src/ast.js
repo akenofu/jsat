@@ -11,7 +11,7 @@ import { traverse, Syntax } from 'estraverse';
 import { analyze } from 'escope';
 import { VisitorKeys } from 'espree';
 import { plugin, current } from './utils';
-import { mark_sinks_as_dangerous_in_ast } from './sinks'
+import { identify_sinks } from './sinks'
 
 const { isArray: array } = Array,
 /**
@@ -68,7 +68,7 @@ export default class AST {
 
         // this.root          = this.ast = espree.parse( source, options );
         this.ast = plugin('parse', null, source, options);
-        mark_sinks_as_dangerous_in_ast(this.ast);
+        identify_sinks(this.ast);
         this.root = this.ast
         this.escope = analyze(this.ast, {
             ecmaVersion: 6,

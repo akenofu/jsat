@@ -14,6 +14,7 @@ import usage from 'command-line-usage';
 import { load_plugins } from "./src/utils";
 import DFG from "./src/dfg";
 import { exec } from 'child_process';
+import { identify_vulnerable_sinks, pretty_print_vulnerable_sinks_ } from './src/sinks'
 
 const
     version = require(path.join(__dirname, 'package.json')).version,
@@ -137,11 +138,13 @@ function process_file(source) {
         dfg = new DFG(source);
 
     if (args.name && args.name.length)
-        args.name.forEach(async name => await single_function(cfg, name, true));
+        args.name.forEach(async name => await single_function(cfg, dfg, name, true));
     else {
         cfg.generate();
-        cfg.forEach(async c => await single_function(cfg, c.name, false));
+        cfg.forEach(async c => await single_function(cfg, dfg, c.name, false));
     }
+
+
 
 }
 
@@ -151,17 +154,22 @@ function process_file(source) {
  * @param {boolean} generate
  * @return {Promise<void>}
  */
-async function single_function(cfg, name, generate) {
+async function single_function(cfg, dfg, name, generate) {
     // eslint-disable-next-line max-len
     let hdr = `------------------------------------------------------------------------------------------------------------\nNEW FUNCTION: __FN__\n------------------------------------------------------------------------------------------------------------`;
 
     const c = generate ? cfg.generate(name) : cfg.by_name(name);
+
+    identify_vulnerable_sinks(c, dfg)
 
     if (args.verbose) console.log(hdr.replace('__FN__', c.name));
     if (args.table) console.log(c.toTable());
     if (args.lines) console.log('' + cfg);
 
     const dot = cfg.create_dot(c);
+
+    pretty_print_vulnerable_sinks_(name);
+
     fs.writeFileSync(path.join(__dirname, 'output', `${name}.dot`), dot);
     exec(`dot -Tsvg -O ./output/${name}.dot`, (error, stdout, stderr) => {
         if (error) {

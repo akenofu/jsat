@@ -42,6 +42,8 @@ export default class CFGBlock {
         /** @type {Array<AnnotatedNode|BaseNode|Node>} */
         this.nodes = [];
         this.sinks = [];
+        this.vulnerable_sinks = [];
+
         this.lastEdge = null;
         this.types = Block.NORMAL;
 
@@ -318,9 +320,9 @@ export default class CFGBlock {
 
         if (this.isa(Block.START) || this.isa(Block.EXIT)) txt += ':' + this.id;
         txt = txt ? `${txt}:${this.id}@${ln}` : `NORMAL:${this.id}@${ln || ''}`;
-        if (this.sinks.length > 0) {
-            this.sinks.forEach(sink => {
-                let source = generate(sink).code;
+        if (this.vulnerable_sinks.length > 0) {
+            this.vulnerable_sinks.forEach(vulnerable_sink => {
+                let source = generate(vulnerable_sink).code;
                 txt += `\\n${source}`
             })
 
