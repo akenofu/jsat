@@ -1,8 +1,5 @@
 [32mNo injection vulnerabilities found in main[39m
 [31mInjection Vulnerabilities found in expolit!!![39m
-[34mFunction[39m [33mexpolit[39m ([31mstring[39m, ...) {
-	[33mexec[39m([31mlink[39m, ...)
-	[31mstring[39m -> inner -> [31mlink[39m 
 [34mFunction[39m [33mexpolit[39m ([31minput[39m, ...) {
 	[33mexec[39m([31mlink[39m, ...)
 	[31minput[39m -> inner -> [31mlink[39m 

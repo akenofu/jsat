@@ -1,5 +1,5 @@
-// expolit:3-24
-digraph "expolit:3-24" {
+// expolit:3-20
+digraph "expolit:3-20" {
     default = "#0D3B66";
     bgcolor = "white";
     color = "#0D3B66";
@@ -9,17 +9,17 @@ digraph "expolit:3-24" {
     nodesep = "1.5";
     margin = "0.5, 0.2";
     labelloc="t";
-    label="expolit:3-24";
+    label="expolit:3-20";
     fontsize=30
     node [color = "#0D3B66", fontcolor = "#0D3B66", fontname = "arial", style = "rounded"];
     0 [label = "entry:0", color = "#C6AC4D", fontcolor = "#0D3B66", fontname = "arial", style = "rounded", shape = "box"];
     8 [label = "exit:8", color = "#C6AC4D", fontcolor = "#0D3B66", fontname = "arial", style = "rounded", shape = "box"];
-    1 [label = "NORMAL:1@4-8"];
-    2 [label = "NORMAL:2@10-12"];
-    3 [label = "LOOP:3@11"];
-    4 [label = "NORMAL:4@15"];
-    5 [label = "TEST:5@17-14"];
-    6 [label = "NORMAL:6@19-22\ncp.exec(link, input);"color = "#FF0000", fontcolor = "#FF0000", fontname = "arial"];
+    1 [label = "NORMAL:1@4-7"];
+    2 [label = "NORMAL:2@9-11"];
+    3 [label = "LOOP:3@10"];
+    4 [label = "NORMAL:4@14"];
+    5 [label = "TEST:5@16-13"];
+    6 [label = "NORMAL:6@18-19\ncp.exec(link);"color = "#FF0000", fontcolor = "#FF0000", fontname = "arial"];
     7 [label = "NORMAL:7@0"];
     
     // Unconditional edges
